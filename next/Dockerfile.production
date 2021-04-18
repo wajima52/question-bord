@@ -2,7 +2,7 @@ FROM node:alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install --frozen-lockfile
+RUN npm install --production
 
 FROM node:alpine AS builder
 WORKDIR /app
@@ -27,4 +27,4 @@ USER nextjs
 
 EXPOSE 3000
 
-#CMD ["npm", "start"]
+CMD ["npm", "start"]
