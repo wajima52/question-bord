@@ -67,7 +67,7 @@ services:
     next.prod:
         build:
           context: ./next
-          dockerfile: Dockerfile.production
+          dockerfile: docker/Dockerfile.production
         ports:
             - '3000:3000'
         networks:

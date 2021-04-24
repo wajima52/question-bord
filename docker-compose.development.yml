@@ -69,7 +69,7 @@ services:
     next.dev:
         build:
           context: ./next
-          dockerfile: Dockerfile.development
+          dockerfile: docker/Dockerfile.development
         ports:
             - '3000:3000'
         networks:
