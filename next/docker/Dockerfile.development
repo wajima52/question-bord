@@ -10,5 +10,3 @@ RUN chown -R nextjs:nodejs /app/.next
 USER nextjs
 
 EXPOSE 3000
-
-CMD ["npm", "run", "dev"]
