@@ -8,8 +8,6 @@ services:
                 APP_PORT: '80'
                 APP_SERVICE: 'laravel.test'
                 DB_PORT: '3306'
-                WWWUSER: 'sail'
-                WWWGROUP: '20'
         image: sail-8.0/app
         ports:
             - '${APP_PORT:-80}:80'
