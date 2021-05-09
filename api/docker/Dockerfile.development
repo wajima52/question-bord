@@ -43,5 +43,7 @@ RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.0
 
 
 COPY docker/php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
+COPY .env.example .env
+RUN composer install
 
 EXPOSE 8000
