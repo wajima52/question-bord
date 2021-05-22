@@ -6,4 +6,7 @@
   <component name="ProjectRootManager">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
+  <component name="TailwindSettings">
+    <option name="mainCssPath" value="$PROJECT_DIR$/../phototech-web/next/tailwind.config.js" />
+  </component>
 </project>
