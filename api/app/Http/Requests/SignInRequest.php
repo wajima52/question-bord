@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rules\Password;
+
+use App\Rules\Password;
 
 /**
  * @property string password
