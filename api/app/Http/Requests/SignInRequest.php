@@ -3,13 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 /**
- * @property mixed email
- * @property mixed password
- * @property mixed device_name
+ * @property string password
+ * @property string email
+ * @property string device_name
+ * @property string name
  */
-class LoginRequest extends FormRequest
+class SignInRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +32,8 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'password' => 'required',
+            'name' => 'required|string',
+            'password' => ['required', 'confirmed', Password::min(8)->numbers()],
             'device_name' => 'required',
         ];
     }

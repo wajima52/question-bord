@@ -44,9 +44,8 @@ class Handler extends ExceptionHandler
     {
         if ($request->is('api/*')) {
             return response()->json([
-                'status' => Response::HTTP_BAD_REQUEST,
                 'errors' => $error->getMessage()
-            ]);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return parent::render();

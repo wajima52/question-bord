@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignInRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -19,6 +20,13 @@ class AuthController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
+
+        return $user->createToken($request->device_name)->plainTextToken;
+    }
+
+    public function signIn(SignInRequest $request)
+    {
+        $user = User::create(['email' => $request->email, 'password' => $request->password, 'name' => $request->name]);
 
         return $user->createToken($request->device_name)->plainTextToken;
     }

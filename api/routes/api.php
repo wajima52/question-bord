@@ -24,4 +24,5 @@ Route::get('hello', function () {
     return 'hello';
 });
 
-Route::post('/sanctum/token', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('signIn', [\App\Http\Controllers\Api\AuthController::class, 'signIn']);
