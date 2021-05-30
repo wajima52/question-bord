@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
 /**
@@ -11,7 +10,7 @@ use Illuminate\Validation\Rules\Password;
  * @property string device_name
  * @property string name
  */
-class SignInRequest extends FormRequest
+class SignInRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

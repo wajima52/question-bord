@@ -40,11 +40,12 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Throwable $error)
+    public function render($request, Throwable $exception)
     {
         if ($request->is('api/*')) {
+            logger($exception->getMessage());
             return response()->json([
-                'errors' => $error->getMessage()
+                'errors' => $exception->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
 
