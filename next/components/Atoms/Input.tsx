@@ -1,10 +1,10 @@
 import React from "react"
 
 type Props = {
-  placeholder: string
+  name: string
   label: string
   type: string
-  name: string
+  placeholder: string
   autoComplete?: string
 }
 
