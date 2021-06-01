@@ -21,11 +21,11 @@ class Password extends \Illuminate\Validation\Rules\Password
         $value = (string) $value;
 
         if ($this->mixedCase && ! preg_match('/(\p{Ll}+.*\p{Lu})|(\p{Lu}+.*\p{Ll})/u', $value)) {
-            $this->fail(__('messages.rules.password.not_mixed'));
+            $this->fail(__('validation.rules.password.mixedCase'));
         }
 
         if ($this->numbers && ! preg_match('/\pN/u', $value)) {
-            $this->fail(__('messages.rules.password.not_numbers'));
+            $this->fail(__('validation.rules.password.numbers'));
         }
 
         if (! empty($this->messages)) {

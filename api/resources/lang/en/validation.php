@@ -152,4 +152,12 @@ return [
 
     'attributes' => [],
 
+
+    'rules' => [
+        'password' => [
+            'mixedCase' => 'The :attribute must contain at least one uppercase and one lowercase letter.',
+            'numbers' => 'The :attribute must contain at least one number.'
+        ],
+    ]
+
 ];
