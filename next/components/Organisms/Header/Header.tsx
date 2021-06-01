@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useState } from "react"
 
 export const Header: React.FC = () => {
@@ -62,20 +63,18 @@ export const Header: React.FC = () => {
           </a>
         </div>
         <div>
-          <a
-            href="/#"
-            className="inline-block text-sm px-4 py-2 leading-none rounded hover:border-transparent  mt-4 lg:mt-0"
-          >
-            ログイン
-          </a>
+          <Link href={"/auth/login"}>
+            <a className="inline-block text-sm px-4 py-2 leading-none rounded hover:border-transparent  mt-4 lg:mt-0">
+              ログイン
+            </a>
+          </Link>
         </div>
         <div>
-          <a
-            href="/#"
-            className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal mt-4 lg:mt-0"
-          >
-            新規登録
-          </a>
+          <Link href={"/auth/sign-in"}>
+            <a className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal mt-4 lg:mt-0">
+              新規登録
+            </a>
+          </Link>
         </div>
       </div>
     </nav>
