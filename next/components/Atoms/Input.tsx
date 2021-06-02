@@ -1,6 +1,6 @@
 import React from "react"
 
-type Props = {
+export type InputProps = {
   name: string
   label: string
   type: string
@@ -8,7 +8,7 @@ type Props = {
   autoComplete?: string
 }
 
-const Input: React.FC<Props> = (props) => {
+const Input: React.FC<InputProps> = (props) => {
   return (
     <div>
       <label htmlFor={props.name}>{props.label}</label>
