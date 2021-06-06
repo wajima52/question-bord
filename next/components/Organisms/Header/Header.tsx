@@ -17,12 +17,14 @@ export const Header: React.FC = () => {
         </svg>
       </div>
       <div className="inline-flex">
-        <a
-          href="/#"
-          className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal lg:hidden mx-2"
-        >
-          登録
-        </a>
+        <Link href={"/auth/sign-in"}>
+          <a
+            href="/auth/sign-in"
+            className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal lg:hidden mx-2"
+          >
+            登録
+          </a>
+        </Link>
         <button
           className="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-whiten lg:hidden"
           onClick={() => setIsOpen(!isOpen)}

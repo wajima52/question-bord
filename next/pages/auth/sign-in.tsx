@@ -1,11 +1,17 @@
 import React from "react"
 import { ButtonProps } from "../../components/Atoms/Button"
-import Input, { InputProps } from "../../components/Atoms/Input"
+import { InputProps } from "../../components/Atoms/Input"
 import AuthForm from "../../components/Molecules/Auth/AuthForm"
 import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
 
 const SignIn: React.FC = () => {
   const inputs: InputProps[] = [
+    {
+      placeholder: "３文字以上",
+      label: "ユーザー名",
+      type: "text",
+      name: "name",
+    },
     {
       placeholder: "メールアドレス",
       label: "メールアドレス",
@@ -18,6 +24,13 @@ const SignIn: React.FC = () => {
       label: "パスワード",
       type: "password",
       name: "password",
+      autoComplete: "new-password",
+    },
+    {
+      placeholder: "もう一度パスワードを入力してください",
+      label: "パスワード(確認用)",
+      type: "password",
+      name: "password_confirmation",
       autoComplete: "new-password",
     },
   ]
@@ -43,14 +56,9 @@ const SignIn: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-0 lg:min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               新規会員登録
             </h2>
