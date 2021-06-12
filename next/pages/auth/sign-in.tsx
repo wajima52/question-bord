@@ -63,7 +63,7 @@ const SignIn: React.FC = () => {
               新規会員登録
             </h2>
           </div>
-          <AuthForm inputs={inputs} button={button} />
+          <AuthForm inputs={inputs} button={button} action={"/api/signIn"} />
         </div>
       </div>
     </DefaultLayout>

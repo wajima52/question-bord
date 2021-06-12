@@ -2,3 +2,4 @@ node_modules
 .next
 .eslintrc.js
 .babelrc.js
+server.js

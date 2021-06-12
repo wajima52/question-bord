@@ -51,7 +51,7 @@ const Login: React.FC = () => {
               ログイン
             </h2>
           </div>
-          <AuthForm inputs={inputs} button={button} />
+          <AuthForm inputs={inputs} button={button} action={"/api/signIn"} />
         </div>
       </div>
     </DefaultLayout>

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "format": "≈ --write './**/*.{tsx,ts}'",
     "lint": "eslint --ext .ts,.tsx --fix --max-warnings 0 .",
     "type-check": "tsc -p ."
@@ -24,8 +24,11 @@
     ]
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
     "next": "10.2.0",
-    "next-auth": "^3.23.3",
     "react": "16.14.0",
     "react-dom": "16.14.0"
   },
