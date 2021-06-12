@@ -5,12 +5,11 @@ import Input, { InputProps } from "../../Atoms/Input"
 type Props = {
   inputs: InputProps[]
   button: ButtonProps
-  action: string
 }
 
 const AuthForm: React.FC<Props> = (props) => {
   return (
-    <form className="mt-8 space-y-6" action={props.action} method="POST">
+    <form className="mt-8 space-y-6" method="POST" name={"auth"}>
       <div className="rounded-md shadow-sm space-y-3">
         {props.inputs.map((input, index) => (
           <Input {...input} key={index} />

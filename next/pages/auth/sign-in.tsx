@@ -1,3 +1,4 @@
+import { parseCookies } from "nookies"
 import React from "react"
 import { ButtonProps } from "../../components/Atoms/Button"
 import { InputProps } from "../../components/Atoms/Input"
@@ -5,6 +6,7 @@ import AuthForm from "../../components/Molecules/Auth/AuthForm"
 import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
 
 const SignIn: React.FC = () => {
+  const cookies = parseCookies()
   const inputs: InputProps[] = [
     {
       placeholder: "３文字以上",
@@ -35,7 +37,7 @@ const SignIn: React.FC = () => {
     },
   ]
   const button: ButtonProps = {
-    type: "submit",
+    type: "button",
     text: "登録する",
     icon: (
       <svg
@@ -52,6 +54,19 @@ const SignIn: React.FC = () => {
         />
       </svg>
     ),
+    onClick: () => {
+      if (process.browser) {
+        const form = document.forms.namedItem("auth")
+        const formData = new FormData(form)
+        const res = fetch("/api/sign-in", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "xsrf-token": cookies["XSRF-TOKEN"],
+          },
+        })
+      }
+    },
   }
 
   return (
@@ -63,7 +78,7 @@ const SignIn: React.FC = () => {
               新規会員登録
             </h2>
           </div>
-          <AuthForm inputs={inputs} button={button} action={"/api/signIn"} />
+          <AuthForm inputs={inputs} button={button} />
         </div>
       </div>
     </DefaultLayout>
