@@ -14,6 +14,7 @@ type Props = {
 const AuthForm: React.FC<Props> = (props) => {
   return (
     <form
+      action={"/api/sign-in"}
       className="mt-8 space-y-6"
       method="POST"
       onSubmit={props.handleSubmit}

@@ -16,7 +16,22 @@ export type SignInFormValues = {
 const SignIn: React.FC = () => {
   const { register, handleSubmit } = useForm<SignInFormValues>()
   const onSubmit: SubmitHandler<SignInFormValues> = (data) => {
-    alert(JSON.stringify(data))
+    if (process.browser) {
+      const res = fetch("/api/sign-in", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "xsrf-token": cookies["XSRF-TOKEN"],
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        if (!response.ok) {
+          alert(
+            "エラーが発生しました。\n申し訳ありませんが、再度ご登録をお願いいたします。"
+          )
+        }
+      })
+    }
   }
   const cookies = parseCookies()
   const inputs: InputProps[] = [

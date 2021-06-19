@@ -10,18 +10,13 @@ const handle = nextApp.getRequestHandler()
 
 const bodyParser = require("body-parser")
 const app = express()
-const multer = require("multer")
-const upload = multer()
-
-// parse cookies
-// we need this because "cookie" is true in csrfProtection
 
 nextApp.prepare().then(() => {
-  app.use(express.json())
-  app.use(express.urlencoded({ extended: true }))
+  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.json())
   app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
-
   app.use(csrf({ cookie: true }))
+
   app.get("*", function (req, res) {
     res.cookie("XSRF-TOKEN", req.csrfToken())
     const parsedUrl = parse(req.url, true)
@@ -29,7 +24,7 @@ nextApp.prepare().then(() => {
   })
 
   const csrfProtection = csrf({ cookie: true })
-  app.post("/api/*", upload.none(), csrfProtection, function (req, res) {
+  app.post("/api/*", csrfProtection, function (req, res) {
     const parsedUrl = parse(req.url, true)
     return handle(req, res, parsedUrl)
   })
