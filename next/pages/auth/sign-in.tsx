@@ -64,6 +64,10 @@ const SignIn: React.FC = () => {
           headers: {
             "xsrf-token": cookies["XSRF-TOKEN"],
           },
+        }).then((response) => {
+          if (!response.ok) {
+            console.log(response.json())
+          }
         })
       }
     },

@@ -34,7 +34,6 @@ class SignInRequest extends BaseRequest
             'email' => 'required|email',
             'name' => 'required|string',
             'password' => ['required', 'confirmed', Password::min(8)->numbers()],
-            'device_name' => 'required',
         ];
     }
 }

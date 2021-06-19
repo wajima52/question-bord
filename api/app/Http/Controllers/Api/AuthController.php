@@ -26,8 +26,8 @@ class AuthController extends Controller
 
     public function signIn(SignInRequest $request)
     {
-        $user = User::create(['email' => $request->email, 'password' => $request->password, 'name' => $request->name]);
+        $user = User::create(['email' => $request->email, 'password' => Hash::make($request->password), 'name' => $request->name]);
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        return ['token' => $user->createToken("question-bord")->plainTextToken];
     }
 }
