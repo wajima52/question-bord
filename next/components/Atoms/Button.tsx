@@ -3,7 +3,7 @@ import React from "react"
 export type ButtonProps = {
   text: string
   type: string
-  onClick: () => void
+  onClick?: () => void
   icon?: HTMLElement
 }
 const Button: React.FC<ButtonProps> = (props) => {
