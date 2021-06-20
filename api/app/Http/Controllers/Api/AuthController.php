@@ -6,11 +6,28 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignInRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+
+    /**
+     * @var UserService
+     */
+    private UserService $userService;
+    /**
+     * @var User
+     */
+    private User $user;
+
+    public function __construct(UserService $userService, User $user)
+    {
+        $this->userService = $userService;
+        $this->user = $user;
+    }
+
     public function login(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
@@ -26,8 +43,11 @@ class AuthController extends Controller
 
     public function signIn(SignInRequest $request)
     {
-        $user = User::create(['email' => $request->email, 'password' => Hash::make($request->password), 'name' => $request->name]);
+        if (!$this->userService->findByEmail($request->email)) {
+            $user = $this->user->create(['email' => $request->email, 'password' => Hash::make($request->password), 'name' => $request->name]);
+            $user->createToken("question-bord")->plainTextToken;
+        }
 
-        return ['token' => $user->createToken("question-bord")->plainTextToken];
+        return [];
     }
 }
