@@ -25,7 +25,7 @@ const Login: React.FC = () => {
           "Content-Type": "application/json",
         },
       })
-      console.log(res.json())
+      console.log(await res.json())
     }
   }
 

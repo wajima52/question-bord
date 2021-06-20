@@ -1,14 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next"
+import { post } from "../../utils/helpers/client"
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const apiResponse = await fetch(process.env.BACKEND_URL + "/login", {
-    method: "POST",
-    body: JSON.stringify(req.body),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-  console.log(apiResponse.status)
-  console.log(apiResponse.json())
-  // res.status(apiResponse.status).json(apiResponse.json())
+  const apiResponse = await post(process.env.BACKEND_URL + "/login", req.body)
+
+  res.status(200).json(apiResponse)
 }
