@@ -1,10 +1,34 @@
+import { parseCookies } from "nookies"
 import React from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { ButtonProps } from "../../components/Atoms/Button"
 import { InputProps } from "../../components/Atoms/Input"
 import AuthForm from "../../components/Molecules/Auth/AuthForm"
 import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
+import { SignInFormValues } from "./sign-in"
+
+export type LoginFormValues = {
+  email: string
+  password: string
+}
 
 const Login: React.FC = () => {
+  const { register, handleSubmit } = useForm<LoginFormValues>()
+  const cookies = parseCookies()
+  const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
+    if (process.browser) {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "xsrf-token": cookies["XSRF-TOKEN"],
+          "Content-Type": "application/json",
+        },
+      })
+      console.log(res.json())
+    }
+  }
+
   const inputs: InputProps[] = [
     {
       placeholder: "メールアドレス",
@@ -12,6 +36,8 @@ const Login: React.FC = () => {
       type: "email",
       name: "email",
       autoComplete: "email",
+      required: true,
+      register: register,
     },
     {
       placeholder: "8文字以上の半角英数字",
@@ -19,6 +45,8 @@ const Login: React.FC = () => {
       type: "password",
       name: "password",
       autoComplete: "current-password",
+      required: true,
+      register: register,
     },
   ]
 
@@ -51,7 +79,11 @@ const Login: React.FC = () => {
               ログイン
             </h2>
           </div>
-          <AuthForm inputs={inputs} button={button} action={"/api/signIn"} />
+          <AuthForm
+            inputs={inputs}
+            button={button}
+            handleSubmit={handleSubmit(onSubmit)}
+          />
         </div>
       </div>
     </DefaultLayout>

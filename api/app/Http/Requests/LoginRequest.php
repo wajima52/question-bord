@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 /**
  * @property mixed email
  * @property mixed password
- * @property mixed device_name
  */
 class LoginRequest extends BaseRequest
 {
@@ -29,7 +28,6 @@ class LoginRequest extends BaseRequest
         return [
             'email' => 'required|email',
             'password' => 'required',
-            'device_name' => 'required',
         ];
     }
 }

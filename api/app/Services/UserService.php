@@ -2,16 +2,20 @@
 
 namespace App\Services;
 
+use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class UserService
 {
-    private \App\Models\User $user;
+    use SoftDeletes;
+    private User $user;
 
-    public function __construct(\App\Models\User $user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-    public function findByEmail(string $email)
+    public function findByEmail(string $email): User
     {
         return $this->user
             ->where('email', $email)

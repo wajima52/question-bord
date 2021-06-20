@@ -7,7 +7,9 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignInRequest;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -30,15 +32,14 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = $this->userService->findByEmail($request->email);
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+            Log::info('認証情報エラー email:'.$request->email);
+            return response()->json([], \Illuminate\Http\Response::HTTP_BAD_REQUEST);
         }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        return ['token' => $user->createToken("question-bord")->plainTextToken];
     }
 
     public function signIn(SignInRequest $request)

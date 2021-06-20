@@ -8,7 +8,6 @@ use App\Rules\Password;
 /**
  * @property string password
  * @property string email
- * @property string device_name
  * @property string name
  */
 class SignInRequest extends BaseRequest
