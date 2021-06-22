@@ -9,7 +9,7 @@ async function http<T>(path: string, config: RequestInit): Promise<T> {
   const response = await fetch(request)
 
   if (!response.ok) {
-    throw new Error(response.statusText)
+    throw new Error(response.status.toString())
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return

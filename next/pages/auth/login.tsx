@@ -1,10 +1,13 @@
-import { parseCookies } from "nookies"
+import { useRouter } from "next/router"
+import { parseCookies, setCookie } from "nookies"
 import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { ButtonProps } from "../../components/Atoms/Button"
 import { InputProps } from "../../components/Atoms/Input"
 import AuthForm from "../../components/Molecules/Auth/AuthForm"
 import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
+import { post } from "../../utils/helpers/client"
+import { Token } from "../../utils/interfaces/Token"
 import { SignInFormValues } from "./sign-in"
 
 export type LoginFormValues = {
@@ -15,17 +18,22 @@ export type LoginFormValues = {
 const Login: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginFormValues>()
   const cookies = parseCookies()
+  const router = useRouter()
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
     if (process.browser) {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "xsrf-token": cookies["XSRF-TOKEN"],
-          "Content-Type": "application/json",
-        },
-      })
-      console.log(await res.json())
+      try {
+        const res = await post<LoginFormValues, Token>("/api/login", data, {
+          headers: {
+            "xsrf-token": cookies["XSRF-TOKEN"],
+            "Content-Type": "application/json",
+          },
+        })
+        setCookie(null, "token", res.token)
+        await router.push("/")
+      } catch (e) {
+        // TODO ログインできない時のメッセージをちゃんと書く
+        alert("ログインが失敗しました。もう一度入力してください")
+      }
     }
   }
 
