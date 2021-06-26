@@ -20,9 +20,10 @@ use Illuminate\Validation\ValidationException;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('hello', function () {
-    return 'hello';
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user', [\App\Http\Controllers\UserController::class, 'getUser']);
 });
 
-Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login'])->name('login');
 Route::post('signIn', [\App\Http\Controllers\Api\AuthController::class, 'signIn']);
