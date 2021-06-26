@@ -1,7 +1,12 @@
 import Link from "next/link"
 import { useState } from "react"
+import { User } from "../../../utils/interfaces/User"
 
-export const Header: React.FC = () => {
+export type HeaderProps = {
+  user: User
+}
+
+export const Header: React.FC<HeaderProps> = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <nav className="flex items-center justify-between flex-wrap bg-teal p-6 shadow-md">
@@ -17,14 +22,18 @@ export const Header: React.FC = () => {
         </svg>
       </div>
       <div className="inline-flex">
-        <Link href={"/auth/sign-in"}>
-          <a
-            href="/auth/sign-in"
-            className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal lg:hidden mx-2"
-          >
-            登録
-          </a>
-        </Link>
+        {user && user.isLoggedIn ? (
+          <p className="font-medium px-4">{user.name} さん</p>
+        ) : (
+          <Link href={"/auth/sign-in"}>
+            <a
+              href="/auth/sign-in"
+              className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal lg:hidden mx-2"
+            >
+              登録
+            </a>
+          </Link>
+        )}
         <button
           className="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-whiten lg:hidden"
           onClick={() => setIsOpen(!isOpen)}
@@ -64,20 +73,25 @@ export const Header: React.FC = () => {
             Blog
           </a>
         </div>
-        <div>
-          <Link href={"/auth/login"}>
-            <a className="inline-block text-sm px-4 py-2 leading-none rounded hover:border-transparent  mt-4 lg:mt-0">
-              ログイン
-            </a>
-          </Link>
-        </div>
-        <div>
-          <Link href={"/auth/sign-in"}>
-            <a className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal mt-4 lg:mt-0">
-              新規登録
-            </a>
-          </Link>
-        </div>
+        {!user ||
+          (!user.isLoggedIn && (
+            <>
+              <div>
+                <Link href={"/auth/login"}>
+                  <a className="inline-block text-sm px-4 py-2 leading-none rounded hover:border-transparent  mt-4 lg:mt-0">
+                    ログイン
+                  </a>
+                </Link>
+              </div>
+              <div>
+                <Link href={"/auth/sign-in"}>
+                  <a className="hidden lg:inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal mt-4 lg:mt-0">
+                    新規登録
+                  </a>
+                </Link>
+              </div>
+            </>
+          ))}
       </div>
     </nav>
   )

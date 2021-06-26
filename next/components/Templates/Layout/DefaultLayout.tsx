@@ -1,9 +1,11 @@
-import { Header } from "../../Organisms/Header/Header"
+import { Header, HeaderProps } from "../../Organisms/Header/Header"
 
-const DefaultLayout: React.FC = ({ children }) => {
+type Props = HeaderProps
+
+const DefaultLayout: React.FC<Props> = ({ children, ...headerProps }) => {
   return (
     <>
-      <Header />
+      <Header {...headerProps} />
       {children}
     </>
   )
