@@ -8,7 +8,6 @@ import AuthForm from "../../components/Molecules/Auth/AuthForm"
 import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
 import { post } from "../../utils/helpers/client"
 import { Token } from "../../utils/interfaces/Token"
-import { SignInFormValues } from "./sign-in"
 
 export type LoginFormValues = {
   email: string
@@ -19,7 +18,7 @@ const Login: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginFormValues>()
   const cookies = parseCookies()
   const router = useRouter()
-  const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     if (process.browser) {
       try {
         const res = await post<LoginFormValues, Token>("/api/login", data, {
@@ -42,19 +41,15 @@ const Login: React.FC = () => {
       placeholder: "メールアドレス",
       label: "メールアドレス",
       type: "email",
-      name: "email",
       autoComplete: "email",
-      required: true,
-      register: register,
+      register: register("email", { required: true }),
     },
     {
       placeholder: "8文字以上の半角英数字",
       label: "パスワード",
       type: "password",
-      name: "password",
       autoComplete: "current-password",
-      required: true,
-      register: register,
+      register: register("password", { required: true }),
     },
   ]
 

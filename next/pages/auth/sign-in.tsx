@@ -14,7 +14,12 @@ export type SignInFormValues = {
 }
 
 const SignIn: React.FC = () => {
-  const { register, handleSubmit } = useForm<SignInFormValues>()
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<SignInFormValues>()
   const onSubmit: SubmitHandler<SignInFormValues> = (data) => {
     if (process.browser) {
       const res = fetch("/api/sign-in", {
@@ -39,36 +44,54 @@ const SignIn: React.FC = () => {
       placeholder: "３文字以上",
       label: "ユーザー名",
       type: "text",
-      register: register,
-      required: true,
-      name: "name",
+      register: register("name", {
+        required: "必ず入力してください",
+        minLength: { value: 3, message: "3文字以上で入力してください" },
+      }),
+      error: errors.name,
     },
     {
       placeholder: "メールアドレス",
       label: "メールアドレス",
       type: "email",
-      register: register,
-      required: true,
+      register: register("email", {
+        required: "必ず入力してください",
+        pattern: {
+          value: /^[\w.!#$%&'*+\/=?^_`{|}~-]+@[\w-]+(?:\.[\w-]+)*$/,
+          message: "正しいメールアドレスの形式を入力してください",
+        },
+      }),
       autoComplete: "email",
-      name: "email",
+      error: errors.email,
     },
     {
-      name: "password",
       placeholder: "8文字以上の半角英数字",
       label: "パスワード",
       type: "password",
-      register: register,
-      required: true,
+      register: register("password", {
+        required: "必ず入力してください",
+        pattern: {
+          value: /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}$/,
+          message:
+            "英数字がそれぞれ１文字以上含まれた8文字以上のパスワードを設定してください",
+        },
+      }),
       autoComplete: "new-password",
+      error: errors.password,
     },
     {
       name: "password_confirmation",
       placeholder: "もう一度パスワードを入力してください",
       label: "パスワード(確認用)",
       type: "password",
-      register: register,
-      required: true,
+      register: register("password_confirmation", {
+        required: "必ず入力してください",
+        validate: () =>
+          watch().password_confirmation === watch().password ||
+          "パスワードが異なります",
+      }),
       autoComplete: "new-password",
+      error: errors.password_confirmation,
     },
   ]
   const button: ButtonProps = {
@@ -104,6 +127,7 @@ const SignIn: React.FC = () => {
             inputs={inputs}
             button={button}
             handleSubmit={handleSubmit(onSubmit)}
+            errors={errors}
           />
         </div>
       </div>

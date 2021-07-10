@@ -1,5 +1,5 @@
 import React from "react"
-import { SubmitHandler } from "react-hook-form"
+import { FieldErrors, SubmitHandler } from "react-hook-form"
 import Button, { ButtonProps } from "../../Atoms/Button"
 import Input, { InputProps } from "../../Atoms/Input"
 
@@ -20,6 +20,7 @@ const AuthForm: React.FC<Props> = (props) => {
     >
       <div className="rounded-md shadow-sm space-y-3">
         {props.inputs.map((input, index) => (
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           <Input {...input} key={index} />
         ))}
       </div>
