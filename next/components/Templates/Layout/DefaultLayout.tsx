@@ -1,3 +1,4 @@
+import React from "react"
 import { Header, HeaderProps } from "../../Organisms/Header/Header"
 
 type Props = HeaderProps

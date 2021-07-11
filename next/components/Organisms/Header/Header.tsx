@@ -1,16 +1,18 @@
 import Link from "next/link"
 import { useState } from "react"
 import { User } from "../../../utils/interfaces/User"
+import ShowMobile from "../../Atoms/ShowMobile"
+import ShowPc from "../../Atoms/ShowPc"
 import ToggleMenu from "../../Atoms/ToggleMenu"
 
 export type HeaderProps = {
-  user: User
+  user?: User
 }
 
 export const Header: React.FC<HeaderProps> = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-teal p-6 shadow-md">
+    <nav className="fixed w-full flex bg-white  items-center justify-between flex-wrap bg-teal p-6 shadow-md">
       <div className="flex items-center flex-no-shrink text-white mr-6">
         <svg
           className="h-8 w-8 mr-2"
@@ -23,17 +25,10 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
         </svg>
       </div>
       <div className="inline-flex">
-        {user && user.isLoggedIn ? (
-          <p className="font-medium px-4">{user.name} さん</p>
-        ) : (
-          <Link href={"/auth/sign-in"}>
-            <a
-              href="/auth/sign-in"
-              className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal lg:hidden mx-2"
-            >
-              登録
-            </a>
-          </Link>
+        {user && user.isLoggedIn && (
+          <ShowMobile>
+            <p className="font-medium px-4">{user.name} さん</p>
+          </ShowMobile>
         )}
         <button
           className="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-whiten lg:hidden"
@@ -71,18 +66,21 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
               Blog
             </a>
           </div>
+          {user && user.isLoggedIn && (
+            <ShowPc>
+              <p className="font-medium px-4">{user.name} さん</p>
+            </ShowPc>
+          )}
           {(!user || !user.isLoggedIn) && (
             <>
-              <div>
+              <div className={"inline center"}>
                 <Link href={"/auth/login"}>
                   <a className="inline-block text-sm px-4 py-2 leading-none rounded hover:border-transparent  mt-4 lg:mt-0">
                     ログイン
                   </a>
                 </Link>
-              </div>
-              <div>
                 <Link href={"/auth/sign-in"}>
-                  <a className="hidden lg:inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal mt-4 lg:mt-0">
+                  <a className="inline-block text-sm px-4 py-2 leading-none border rounded border-black hover:border-transparent hover:text-teal mx-2">
                     新規登録
                   </a>
                 </Link>
