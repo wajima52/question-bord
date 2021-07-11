@@ -2,5 +2,7 @@ node_modules
 .next
 .eslintrc.js
 .babelrc.js
+next.config.js
+.prettierrc
 server.js
 cypress

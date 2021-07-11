@@ -30,6 +30,7 @@ module.exports = {
     "plugin:import/typescript",
     "plugin:jsx-a11y/recommended",
     "prettier",
+    "next",
   ],
   rules: {
     "react/react-in-jsx-scope": "off",
@@ -55,6 +56,12 @@ module.exports = {
           ["parent", "sibling", "index"],
         ],
         alphabetize: { order: "asc", ignoreCase: false },
+      },
+    ],
+    "import/no-anonymous-default-export": [
+      "error",
+      {
+        allowArrowFunction: true,
       },
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",

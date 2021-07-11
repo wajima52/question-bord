@@ -1,5 +1,5 @@
 import React from "react"
-import { FieldErrors, SubmitHandler } from "react-hook-form"
+import { SubmitHandler } from "react-hook-form"
 import Button, { ButtonProps } from "../../Atoms/Button"
 import Input, { InputProps } from "../../Atoms/Input"
 
