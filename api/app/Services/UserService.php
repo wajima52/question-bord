@@ -15,7 +15,11 @@ class UserService
         $this->user = $user;
     }
 
-    public function findByEmail(string $email): User
+    /**
+     * @param string $email
+     * @return User|null
+     */
+    public function findByEmail(string $email): ?User
     {
         return $this->user
             ->where('email', $email)

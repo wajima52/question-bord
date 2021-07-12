@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import { parseCookies } from "nookies"
 import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
@@ -14,15 +15,16 @@ export type SignInFormValues = {
 }
 
 const SignIn: React.FC = () => {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<SignInFormValues>()
-  const onSubmit: SubmitHandler<SignInFormValues> = (data) => {
+  const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
     if (process.browser) {
-      const res = fetch("/api/sign-in", {
+      const isSucceeded = await fetch("/api/sign-in", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -34,8 +36,14 @@ const SignIn: React.FC = () => {
           alert(
             "エラーが発生しました。\n申し訳ありませんが、再度ご登録をお願いいたします。"
           )
+          return false
         }
+        return true
       })
+
+      if (isSucceeded) {
+        await router.push("/")
+      }
     }
   }
   const cookies = parseCookies()

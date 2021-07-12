@@ -7,7 +7,7 @@ const DefaultLayout: React.FC<Props> = ({ children, ...headerProps }) => {
   return (
     <>
       <Header {...headerProps} />
-      {children}
+      <div className={"pt-20"}>{children}</div>
     </>
   )
 }
