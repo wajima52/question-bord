@@ -73,7 +73,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
           )}
           {(!user || !user.isLoggedIn) && (
             <>
-              <div className={"inline center"}>
+              <div className={"block mt-4 lg:inline-block lg:mt-0 text-center"}>
                 <Link href={"/auth/login"}>
                   <a className="inline-block text-sm px-4 py-2 leading-none rounded hover:border-transparent  mt-4 lg:mt-0">
                     ログイン
