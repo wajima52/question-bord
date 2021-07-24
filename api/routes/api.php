@@ -27,3 +27,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login'])->name('login');
 Route::post('signIn', [\App\Http\Controllers\Api\AuthController::class, 'signIn']);
+
+Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Foundation\Auth\EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');

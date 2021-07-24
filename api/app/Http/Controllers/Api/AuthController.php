@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignInRequest;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -45,7 +46,16 @@ class AuthController extends Controller
     public function signIn(SignInRequest $request)
     {
         if (!$this->userService->findByEmail($request->email)) {
-            $user = $this->user->create(['email' => $request->email, 'password' => Hash::make($request->password), 'name' => $request->name]);
+            \DB::beginTransaction();
+            try {
+                $user = $this->user->create(['email' => $request->email, 'password' => Hash::make($request->password), 'name' => $request->name]);
+                event(new Registered($user));
+            } catch (\Exception $exception) {
+                \DB::rollBack();
+                Log::error($exception->getMessage());
+                return response()->json("登録エラー", \Illuminate\Http\Response::HTTP_BAD_REQUEST);
+            }
+            \DB::commit();
             $user->createToken("question-bord")->plainTextToken;
         }
 
