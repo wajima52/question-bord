@@ -33,9 +33,9 @@ class Password extends \Illuminate\Validation\Rules\Password
         }
 
         if ($this->uncompromised && ! Container::getInstance()->make(UncompromisedVerifier::class)->verify([
-                'value' => $value,
-                'threshold' => $this->compromisedThreshold,
-            ])) {
+            'value' => $value,
+            'threshold' => $this->compromisedThreshold,
+        ])) {
             return $this->fail(
                 'The given :attribute has appeared in a data leak. Please choose a different :attribute.'
             );
@@ -43,5 +43,4 @@ class Password extends \Illuminate\Validation\Rules\Password
 
         return true;
     }
-
 }

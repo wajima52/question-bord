@@ -17,6 +17,7 @@ class UserService
 
     /**
      * @param string $email
+     *
      * @return User|null
      */
     public function findByEmail(string $email): ?User

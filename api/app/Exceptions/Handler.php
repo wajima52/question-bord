@@ -14,7 +14,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+
     ];
 
     /**
@@ -36,7 +36,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+            
         });
     }
 
@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
         if ($request->is('api/*')) {
             logger($exception->getMessage());
             return response()->json([
-                'errors' => $exception->getMessage()
+                'errors' => $exception->getMessage(),
             ], Response::HTTP_BAD_REQUEST);
         }
 
