@@ -26,9 +26,10 @@ Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login'])
 Route::post('signIn', [\App\Http\Controllers\Api\AuthController::class, 'signIn']);
 
 Route::domain(config('app.url'))->group(function () {
-    Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Foundation\Auth\EmailVerificationRequest $request) {
-        $request->fulfill();
-
-        return redirect('/home');
-    })->middleware(['auth', 'signed'])->name('verification.verify');
+    // メールに添付するURL　確認処理は/email/verification/で行う
+    Route::get('/email/verify/{id}/{hash}', function (Request $request) {
+        return response()->json([]);
+    })->name('verification.verify');
 });
+
+Route::get('/email/verification/{id}/{hash}', [\App\Http\Controllers\Api\VerifyController::class,  'verifyEmail']);

@@ -36,7 +36,6 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            
         });
     }
 
@@ -44,6 +43,7 @@ class Handler extends ExceptionHandler
     {
         if ($request->is('api/*')) {
             logger($exception->getMessage());
+            logger($exception->getFile() . ':' . $exception->getLine());
             return response()->json([
                 'errors' => $exception->getMessage(),
             ], Response::HTTP_BAD_REQUEST);
