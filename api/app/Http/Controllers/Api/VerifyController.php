@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class VerifyController extends Controller
 {
@@ -27,17 +29,19 @@ class VerifyController extends Controller
             (string) $hash,
             sha1($user->getEmailForVerification())
         )) {
-            return redirect(config('app.url') . '/email/verify/error');
+            Log::info('不正なhash値です');
+            return response()->json(['message' => '不正なhash値です'], Response::HTTP_BAD_REQUEST);
         }
 
         if ($user->hasVerifiedEmail()) {
-            return redirect(config('app.url') . '/email/verify/already-success');
+            Log::info('既に確認済みです');
+            return response()->json(['message' => '既に確認済みです'], Response::HTTP_CONFLICT);
         }
 
         if ($user->markEmailAsVerified()) {
             event(new Verified($user));
         }
 
-        return redirect(config('app.url') . '/email/verify/success');
+        return response()->json([], Response::HTTP_OK);
     }
 }

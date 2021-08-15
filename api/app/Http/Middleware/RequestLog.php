@@ -18,6 +18,7 @@ class RequestLog
      */
     public function handle(Request $request, Closure $next)
     {
+        Log::info($request->path());
         Log::info(print_r($request->all(), true));
         return $next($request);
     }
