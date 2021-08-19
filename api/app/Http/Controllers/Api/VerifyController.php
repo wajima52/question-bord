@@ -42,6 +42,6 @@ class VerifyController extends Controller
             event(new Verified($user));
         }
 
-        return response()->json([], Response::HTTP_OK);
+        return ['token' => $user->createToken('question-bord')->plainTextToken];
     }
 }

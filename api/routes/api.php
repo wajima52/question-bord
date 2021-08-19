@@ -25,11 +25,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login'])->name('login');
 Route::post('signIn', [\App\Http\Controllers\Api\AuthController::class, 'signIn']);
 
-Route::domain(config('app.url'))->group(function () {
-    // メールに添付するURL　確認処理は/email/verification/で行う
-    Route::get('/email/verify/{id}/{hash}', function (Request $request) {
-        return response()->json([]);
-    })->name('verification.verify');
-});
-
 Route::get('/email/verification/{id}/{hash}', [\App\Http\Controllers\Api\VerifyController::class,  'verifyEmail']);
