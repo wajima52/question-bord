@@ -3,30 +3,52 @@ import { setCookie } from "nookies"
 import DefaultLayout from "../../../../components/Templates/Layout/DefaultLayout"
 import { get } from "../../../../utils/helpers/client"
 
-const EmailVerify: React.FC = () => {
+type Props = {
+  result: "duplicated" | "error"
+}
+
+const EmailVerify: React.FC<Props> = (props) => {
   return (
     <DefaultLayout>
-      メールアドレスを確認中です。 少しお待ちください
+      {props.result === "duplicated" &&
+        "既に確認済みです。ログイン画面からログインしてください"}
+      {props.result === "error" &&
+        "エラーが発生しました。再度メールを確認してください"}
     </DefaultLayout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const verifyResult = await get(
-    process.env.BACKEND_URL +
-      `/email/verification/${String(context.query.id)}/${String(
-        context.query.hash
-      )}?expires=${String(context.query.expires)}&signature=${String(
-        context.query.signature
-      )}`
-  )
+  try {
+    const verifyResult = await get(
+      process.env.BACKEND_URL +
+        `/email/verification/${String(context.query.id)}/${String(
+          context.query.hash
+        )}?expires=${String(context.query.expires)}&signature=${String(
+          context.query.signature
+        )}`
+    )
 
-  setCookie(context, "token", verifyResult.token, {
-    maxAge: 30 * 24 * 60 * 60,
-    path: "/",
-  })
+    setCookie(context, "token", verifyResult.token, {
+      maxAge: 30 * 24 * 60 * 60,
+      path: "/",
+    })
+  } catch (error: Error) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const result = error.message === "409" ? "duplicated" : "error"
+    return {
+      props: {
+        result: result,
+      } as Props,
+    }
+  }
 
-  return { props: {} }
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  }
 }
 
 export default EmailVerify
