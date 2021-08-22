@@ -72,10 +72,12 @@ const Login: React.FC = () => {
           button={button}
           handleSubmit={handleSubmit(onSubmit)}
         />
-        パスワードをお忘れの方は
-        <Link href={"/auth/send-password-reset"}>
-          <a>こちら</a>
-        </Link>
+        <p>
+          パスワードをお忘れの方は
+          <Link href={"/auth/send-password-reset"}>
+            <a className={"text-blue-500"}>こちら</a>
+          </Link>
+        </p>
       </div>
     </DefaultLayout>
   )
