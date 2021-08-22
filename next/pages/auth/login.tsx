@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { parseCookies, setCookie } from "nookies"
 import React from "react"
@@ -71,6 +72,10 @@ const Login: React.FC = () => {
           button={button}
           handleSubmit={handleSubmit(onSubmit)}
         />
+        パスワードをお忘れの方は
+        <Link href={"/auth/send-password-reset"}>
+          <a>こちら</a>
+        </Link>
       </div>
     </DefaultLayout>
   )
