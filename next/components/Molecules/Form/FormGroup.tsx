@@ -11,7 +11,7 @@ type Props = {
   handleSubmit: SubmitHandler<TSubmitFieldValues>
 }
 
-const AuthForm: React.FC<Props> = (props) => {
+const FormGroup: React.FC<Props> = (props) => {
   return (
     <form
       className="mt-8 space-y-6"
@@ -32,4 +32,4 @@ const AuthForm: React.FC<Props> = (props) => {
   )
 }
 
-export default AuthForm
+export default FormGroup

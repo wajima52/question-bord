@@ -5,7 +5,7 @@ import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { ButtonProps } from "../../components/Atoms/Button"
 import { InputProps } from "../../components/Atoms/Input"
-import AuthForm from "../../components/Molecules/Auth/AuthForm"
+import FormGroup from "../../components/Molecules/Form/FormGroup"
 import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
 import { post } from "../../utils/helpers/client"
 import { Token } from "../../utils/interfaces/Token"
@@ -67,7 +67,7 @@ const Login: React.FC = () => {
             ログイン
           </h2>
         </div>
-        <AuthForm
+        <FormGroup
           inputs={inputs}
           button={button}
           handleSubmit={handleSubmit(onSubmit)}
