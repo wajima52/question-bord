@@ -3,6 +3,7 @@ import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { ButtonProps } from "../../components/Atoms/Button"
 import { InputProps } from "../../components/Atoms/Input"
+import Title from "../../components/Atoms/Title"
 import FormGroup from "../../components/Molecules/Form/FormGroup"
 import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
 import { post } from "../../utils/helpers/client"
@@ -34,17 +35,13 @@ const SendPasswordReset: React.FC = () => {
 
   const button: ButtonProps = {
     type: "submit",
-    text: "パスワードリセットメールを送信する",
+    text: "次へ",
   }
 
   return (
     <DefaultLayout>
       <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            パスワードリセット
-          </h2>
-        </div>
+        <Title text={"パスワードリセット"} />
         <FormGroup
           inputs={inputs}
           button={button}

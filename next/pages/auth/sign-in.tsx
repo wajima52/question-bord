@@ -4,6 +4,7 @@ import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { ButtonProps } from "../../components/Atoms/Button"
 import { InputProps } from "../../components/Atoms/Input"
+import Title from "../../components/Atoms/Title"
 import FormGroup from "../../components/Molecules/Form/FormGroup"
 import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
 
@@ -110,11 +111,7 @@ const SignIn: React.FC = () => {
   return (
     <DefaultLayout>
       <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            新規会員登録
-          </h2>
-        </div>
+        <Title text={"新規会員登録"} />
         <FormGroup
           inputs={inputs}
           button={button}
