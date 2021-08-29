@@ -20,7 +20,7 @@ Route::domain(config('app.url'))->group(function () {
         return response()->json([]);
     })->name('verification.verify');
 
-    Route::get('/reset-password/{token}', function () {
+    Route::get('/auth/reset-password/{token}', function () {
         return response()->json([]);
     })->name('password.reset');
 });

@@ -1,57 +1,26 @@
 import { useRouter } from "next/router"
-import { parseCookies } from "nookies"
 import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { ButtonProps } from "../../components/Atoms/Button"
-import { InputProps } from "../../components/Atoms/Input"
-import Title from "../../components/Atoms/Title"
-import FormGroup from "../../components/Molecules/Form/FormGroup"
-import DefaultLayout from "../../components/Templates/Layout/DefaultLayout"
-import { submitForm } from "../../utils/helpers/client"
+import { ButtonProps } from "../../../components/Atoms/Button"
+import { InputProps } from "../../../components/Atoms/Input"
+import Title from "../../../components/Atoms/Title"
+import FormGroup from "../../../components/Molecules/Form/FormGroup"
+import DefaultLayout from "../../../components/Templates/Layout/DefaultLayout"
+import { submitForm } from "../../../utils/helpers/client"
 
-export type SignInFormValues = {
-  name: string
-  email: string
+export type NewPasswordFormValue = {
   password: string
   password_confirmation: string
 }
 
-const SignIn: React.FC = () => {
-  const router = useRouter()
+const ResetPassword: React.FC = () => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<SignInFormValues>()
-  const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
-    await submitForm(data, router, "/api/sign-in", "/")
-  }
+  } = useForm<NewPasswordFormValue>()
   const inputs: InputProps[] = [
-    {
-      placeholder: "３文字以上",
-      label: "ユーザー名",
-      type: "text",
-      register: register("name", {
-        required: "必ず入力してください",
-        minLength: { value: 3, message: "3文字以上で入力してください" },
-      }),
-      error: errors.name,
-    },
-    {
-      placeholder: "メールアドレス",
-      label: "メールアドレス",
-      type: "email",
-      register: register("email", {
-        required: "必ず入力してください",
-        pattern: {
-          value: /^[\w.!#$%&'*+\/=?^_`{|}~-]+@[\w-]+(?:\.[\w-]+)*$/,
-          message: "正しいメールアドレスの形式を入力してください",
-        },
-      }),
-      autoComplete: "email",
-      error: errors.email,
-    },
     {
       placeholder: "8文字以上の半角英数字",
       label: "パスワード",
@@ -82,15 +51,21 @@ const SignIn: React.FC = () => {
       error: errors.password_confirmation,
     },
   ]
+  const router = useRouter()
+  const onSubmit: SubmitHandler<NewPasswordFormValue> = async (data) => {
+    await submitForm<NewPasswordFormValue>(data, router, "/api/resetPassword")
+  }
+
   const button: ButtonProps = {
     type: "submit",
-    text: "登録する",
+    text: "パスワードを更新する",
   }
 
   return (
     <DefaultLayout>
       <div className="max-w-md w-full space-y-8">
-        <Title text={"新規会員登録"} />
+        <Title text={"パスワードリセット"} />
+        新しいパスワードを入力してください
         <FormGroup
           inputs={inputs}
           button={button}
@@ -102,4 +77,4 @@ const SignIn: React.FC = () => {
   )
 }
 
-export default SignIn
+export default ResetPassword
