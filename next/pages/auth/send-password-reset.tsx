@@ -10,8 +10,12 @@ import { post } from "../../utils/helpers/client"
 import { Token } from "../../utils/interfaces/Token"
 import { LoginFormValues } from "./login"
 
+export type PasswordResetFormValue = {
+  email: string
+}
+
 const SendPasswordReset: React.FC = () => {
-  const { register, handleSubmit } = useForm<LoginFormValues>()
+  const { register, handleSubmit } = useForm<PasswordResetFormValue>()
   const cookies = parseCookies()
   const inputs: InputProps[] = [
     {
@@ -23,9 +27,8 @@ const SendPasswordReset: React.FC = () => {
     },
   ]
 
-  const onSubmit: SubmitHandler<LoginFormValues> = async () => {
-    // TODO
-    await post<LoginFormValues, Token>("", data, {
+  const onSubmit: SubmitHandler<PasswordResetFormValue> = async (data) => {
+    await post<PasswordResetFormValue, Token>("/api/password-reset", data, {
       headers: {
         "xsrf-token": cookies["XSRF-TOKEN"],
         "Content-Type": "application/json",

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ForgetPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignInRequest;
 use App\Models\User;
@@ -56,6 +57,15 @@ class AuthController extends Controller
             $user->createToken('question-bord')->plainTextToken;
         }
 
+        return [];
+    }
+
+    public function passwordReset(ForgetPasswordRequest $request)
+    {
+        $user = $this->userService->findByEmail($request->email);
+        if ($user) {
+            \Illuminate\Support\Facades\Password::sendResetLink($request->only('email'));
+        }
         return [];
     }
 }

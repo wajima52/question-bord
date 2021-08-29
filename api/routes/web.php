@@ -19,4 +19,8 @@ Route::domain(config('app.url'))->group(function () {
     Route::get('/email/verify/{id}/{hash}', function (Request $request) {
         return response()->json([]);
     })->name('verification.verify');
+
+    Route::get('/reset-password/{token}', function () {
+        return response()->json([]);
+    })->name('password.reset');
 });
