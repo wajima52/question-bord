@@ -27,4 +27,5 @@ Route::post('signIn', [\App\Http\Controllers\Api\AuthController::class, 'signIn'
 
 Route::get('/email/verification/{id}/{hash}', [\App\Http\Controllers\Api\VerifyController::class,  'verifyEmail']);
 
-Route::post('password-reset', [\App\Http\Controllers\Api\AuthController::class, 'passwordReset']);
+Route::post('send-password-reset-mail', [\App\Http\Controllers\Api\AuthController::class, 'sendPasswordReset']);
+Route::post('reset-password', [\App\Http\Controllers\Api\AuthController::class, 'resetPassword']);

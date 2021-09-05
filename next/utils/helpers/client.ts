@@ -36,31 +36,15 @@ export async function post<T, U>(
 
 export async function submitForm<T>(
   data: UnpackNestedValue<T>,
-  router: NextRouter,
-  postUrl: string,
-  redirectUrl?: string
+  postUrl: string
 ) {
-  if (process.browser) {
-    const cookies = parseCookies()
-    const isSucceeded = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "xsrf-token": cookies["XSRF-TOKEN"],
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      if (!response.ok) {
-        alert(
-          "エラーが発生しました。\n申し訳ありませんが、再度ご登録をお願いいたします。"
-        )
-        return false
-      }
-      return true
-    })
-
-    if (isSucceeded && redirectUrl && redirectUrl.length > 0) {
-      await router.push(redirectUrl)
-    }
-  }
+  const csrfToken = process.browser ? parseCookies()["XSRF-TOKEN"] : null
+  return await fetch(postUrl, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "xsrf-token": csrfToken,
+      "Content-Type": "application/json",
+    },
+  })
 }

@@ -25,7 +25,20 @@ const SignIn: React.FC = () => {
     formState: { errors },
   } = useForm<SignInFormValues>()
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
-    await submitForm(data, router, "/api/sign-in", "/")
+    const isSucceeded = await submitForm(data, "/api/sign-in").then(
+      (response) => {
+        if (!response.ok) {
+          alert(
+            "エラーが発生しました。\n申し訳ありませんが、再度ご登録をお願いいたします。"
+          )
+        }
+        return response.ok
+      }
+    )
+
+    if (isSucceeded) {
+      await router.push("/")
+    }
   }
   const inputs: InputProps[] = [
     {

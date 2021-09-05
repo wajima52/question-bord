@@ -11,6 +11,8 @@ import { submitForm } from "../../../utils/helpers/client"
 export type NewPasswordFormValue = {
   password: string
   password_confirmation: string
+  mail: string
+  token: string
 }
 
 const ResetPassword: React.FC = () => {
@@ -53,7 +55,31 @@ const ResetPassword: React.FC = () => {
   ]
   const router = useRouter()
   const onSubmit: SubmitHandler<NewPasswordFormValue> = async (data) => {
-    await submitForm<NewPasswordFormValue>(data, router, "/api/resetPassword")
+    const isSucceeded = await submitForm<NewPasswordFormValue>(
+      {
+        ...data,
+        mail: String(router.query.email),
+        token: String(router.query.token),
+      },
+      "/api/update-password"
+    )
+      .then((response) => {
+        if (response.ok) {
+          alert(
+            "パスワードリセットが成功しました。\nログインページにリダイレクトします"
+          )
+        }
+        return response.ok
+      })
+      .catch(() => {
+        alert(
+          "エラーが発生しました。\n申し訳ありませんが、再度パスワードリセット操作を行ってください"
+        )
+      })
+
+    if (isSucceeded) {
+      await router.push("/auth/login")
+    }
   }
 
   const button: ButtonProps = {
