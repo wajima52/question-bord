@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     )
 
     res.status(200).json("success")
-  } catch (error: Error) {
+  } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     res.status(Number(error.message)).json("reset error")
   }

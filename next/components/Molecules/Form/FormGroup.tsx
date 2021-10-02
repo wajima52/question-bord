@@ -1,5 +1,5 @@
 import React from "react"
-import { SubmitHandler } from "react-hook-form"
+import { FieldError, SubmitHandler } from "react-hook-form"
 import Button, { ButtonProps } from "../../Atoms/Button"
 import Input, { InputProps } from "../../Atoms/Input"
 
@@ -24,7 +24,6 @@ const FormGroup: React.FC<Props> = (props) => {
           <Input {...input} key={index} />
         ))}
       </div>
-
       <div>
         <Button {...props.button} />
       </div>

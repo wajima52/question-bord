@@ -20,7 +20,7 @@ const EmailVerify: React.FC<Props> = (props) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const verifyResult = await get(
+    const verifyResult = await get<{ token: string }>(
       process.env.BACKEND_URL +
         `/email/verification/${String(context.query.id)}/${String(
           context.query.hash
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       maxAge: 30 * 24 * 60 * 60,
       path: "/",
     })
-  } catch (error: Error) {
+  } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const result = error.message === "409" ? "duplicated" : "error"
     return {

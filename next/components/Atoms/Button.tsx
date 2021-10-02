@@ -2,7 +2,7 @@ import React from "react"
 
 export type ButtonProps = {
   text: string
-  type: string
+  type: "button" | "submit" | "reset"
   onClick?: () => void
 }
 const Button: React.FC<ButtonProps> = (props) => {

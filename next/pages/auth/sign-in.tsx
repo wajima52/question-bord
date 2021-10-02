@@ -1,5 +1,4 @@
 import { useRouter } from "next/router"
-import { parseCookies } from "nookies"
 import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { ButtonProps } from "../../components/Atoms/Button"
@@ -81,7 +80,6 @@ const SignIn: React.FC = () => {
       error: errors.password,
     },
     {
-      name: "password_confirmation",
       placeholder: "もう一度パスワードを入力してください",
       label: "パスワード(確認用)",
       type: "password",
@@ -108,7 +106,6 @@ const SignIn: React.FC = () => {
           inputs={inputs}
           button={button}
           handleSubmit={handleSubmit(onSubmit)}
-          errors={errors}
         />
       </div>
     </DefaultLayout>

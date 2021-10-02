@@ -1,6 +1,8 @@
+import { ReactElement } from "react"
+
 export type ToggleProps = {
   isOpen: boolean
-  children: HTMLElement
+  children: ReactElement
 }
 
 const ToggleMenu: React.FC<ToggleProps> = ({ children, isOpen }) => {

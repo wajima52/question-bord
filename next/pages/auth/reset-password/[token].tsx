@@ -39,7 +39,6 @@ const ResetPassword: React.FC = () => {
       error: errors.password,
     },
     {
-      name: "password_confirmation",
       placeholder: "もう一度パスワードを入力してください",
       label: "パスワード(確認用)",
       type: "password",
@@ -96,7 +95,6 @@ const ResetPassword: React.FC = () => {
           inputs={inputs}
           button={button}
           handleSubmit={handleSubmit(onSubmit)}
-          errors={errors}
         />
       </div>
     </DefaultLayout>
