@@ -18,7 +18,10 @@ RUN pecl channel-update https://pecl.php.net/channel.xml \
     && pecl install swoole
 
 COPY . /var/www/html
-RUN composer install --no-dev
+RUN composer install --optimize-autoloader --no-dev
+RUN php artisan config:cache
+RUN php artisan route:cache
+
 #COPY docker/start-container /usr/local/bin/start-container
 #COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 #COPY docker/php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
